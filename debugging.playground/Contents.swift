@@ -15,41 +15,44 @@ class Foo {
     var wordB : String!
     
     init (words: [String?]) {
-        wordA = words[0]?
-        wordB = words[1]?
+        if let _ = words[0] {
+            wordA = words[0]
+        }
+        if let _ = words[1] {
+            wordB = words[1]
+        }
     }
     
-//: [EXPLAIN YOUR ANSWER TO Q1 HERE]
+//: [You can't unwrap the optionals because wordA and wordB both strictly expects a string. If nill is returned by the optional, code will have a typeerror.
     
 
     
 //: ## Q2: Variable Types and Function Types
 //: Why does the compiler dislike the for loop? Also, what should we return?
     
-    func arePalindromes(words: [String]) -> Bool! {
-        let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
+    class func arePalindromes(words: [String]) -> Bool {
+        var reversedWords = words.map() {String($0.characters.reverse())}
+        let numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
-        
-        return nil
+        return true
     }
     
-//: [EXPLAIN YOUR ANSWER TO Q2 HERE]
+//: [For loop is complaining because we're trying to increment a constant(let) variable i. Boolean should never have an optional since it's either true or false as Gene said in lecture 2.]
     
     
     
 //: ## Q3: More functions, and object initialization
 //: The method should be returning true or false -- what's wrong?
 //: Are we initializing the dictionary correctly?
-    func isAnagram(wordA: String, wordB: String) -> Bool? {
-        var countLetters : [Character : Int]
-        var lenA = wordA.characters.count
-        var lenB = wordB.characters.count
+    class func isAnagram(wordA: String, wordB: String) -> Bool {
+        var countLetters : [Character : Int] = [Character: Int]()
+        let lenA = wordA.characters.count
+        let lenB = wordB.characters.count
         
         if lenA != lenB {
             return false
@@ -81,11 +84,11 @@ class Foo {
             }
         }
         
-        return nil
+        return true
     }
 }
 
-//: [EXPLAIN YOUR ANSWER TO Q3 HERE]
+//: [The return type can just bee Bool. The function should be either returning true or false, not nill. Dictionary was defined but not initialized so had to initialize it. Lengths are constants so had to use "let".]
 
 
 //: **Do not** change anything below.
